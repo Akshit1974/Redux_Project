@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import { decrement, increment, addAmount, selectCount, decreaseAmount } from "./CounterSlice";
 import "./counter.css";
@@ -8,7 +8,11 @@ const Counter = () => {
 
     const count = useSelector(selectCount);
     const dispatch = useDispatch();
-    const [incrementAmount, setIncrementAmount] = useState("0");
+    const [incrementAmount, setIncrementAmount] = useState(0);
+
+    useEffect(() => {
+        document.title = count;
+    },[count]);
     return (
         <Fragment>
             <div className="content">
@@ -22,7 +26,7 @@ const Counter = () => {
                     <input value={incrementAmount} onChange={(e) => setIncrementAmount(e.target.value)} />
                     <button className='btn' onClick={() => dispatch(addAmount(Number(incrementAmount) || 0))}> Add Amount</button>
                     <input value={incrementAmount} onChange={(e) => setIncrementAmount(e.target.value)} />
-                    <button className='btn'  onClick={() => dispatch(decreaseAmount(Number(incrementAmount) || 0))}>decreaseAmount</button>
+                    <button className='btn' onClick={() => dispatch(decreaseAmount(Number(incrementAmount) || 0))}>decreaseAmount</button>
                 </div>
             </div>
         </Fragment>
